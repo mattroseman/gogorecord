@@ -9,6 +9,9 @@ import {
 } from 'react-native';
 import Camera from 'react-native-camera';
 
+import RecordButton from './components/RecordButton.js';
+import Countdown from './components/Countdown.js';
+
 export default class GoGoRecord extends Component {
     constructor(props) {
         super(props);
@@ -17,6 +20,8 @@ export default class GoGoRecord extends Component {
             startRecordingText: '[RECORD]',
             stopRecordingText: '[STOP]',
             recording: false,
+            recordTime: 60,
+            timeLeft: 60,
         }
 
         this.startRecording = this.startRecording.bind(this);
@@ -33,9 +38,12 @@ export default class GoGoRecord extends Component {
                     style={styles.preview}
                     aspect={Camera.constants.Aspect.fill}
                 >
-                    <Text style={styles.capture} onPress={this.state.recording ? this.stopRecording : this.startRecording}>
-                        {this.state.recording ? this.state.stopRecordingText : this.state.startRecordingText}
-                    </Text>
+                    <RecordButton
+                        recording={this.state.recording}
+                        onStopRecording={this.handleStopRecording}
+                        onStartRecording={this.handleStartRecording}
+                    />
+                    <Countdown timeLeft={this.state.timeLeft} />
                 </Camera>
             </View>
         );
@@ -46,8 +54,6 @@ export default class GoGoRecord extends Component {
             mode: Camera.constants.CaptureMode.video,
         };
 
-        console.log('test2');
-
         this.camera.capture(options)
             .then((data) => console.log(data))
             .catch((err) => console.error(err));
@@ -55,6 +61,34 @@ export default class GoGoRecord extends Component {
         this.setState({
             recording: true,
         });
+
+        // create an interval to decrement timeLeft every second
+        var intervalId = setInterval(() => {
+            console.log(this.state.timeLeft);
+            this.setState((prevState) => {
+                timeLeft: prevState.timeLeft--
+            }, () => {
+                console.log('test');
+                // If the timeLeft is zero clear this interval, stop recording
+                // and reset timeLeft
+                if (this.state.timeLeft <= 0) {
+                    clearInterval(intervalId);
+                    this.handleStopRecording();
+                    this.setState((prevState) => {
+                        timeLeft: prevState.recordTime
+                    });
+                }
+
+                // if handleStopRecording is called by other means
+                // then clear the interval and reset timeLeft
+                if (!this.state.recording) {
+                    clearInterval(intervalId);
+                    this.setState((prevState) => {
+                        timeLeft: prevState.recordTime
+                    });
+                }
+            });
+        }, 1000);
     }
 
     stopRecording() {
