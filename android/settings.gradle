@@ -1,0 +1,3 @@
+rootProject.name = 'gogorecord'
+
+include ':app'
