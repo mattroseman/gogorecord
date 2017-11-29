@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-import { 
+import {
     Text,
     StyleSheet,
-    Dimensions,
-    TouchableHighlight,
 } from 'react-native';
 
 export default class RecordButton extends Component {
