@@ -1,13 +1,13 @@
-'use strict';
 import React, { Component } from 'react';
 import {
     Dimensions,
     StyleSheet,
-    Text,
     TouchableHighlight,
     View
 } from 'react-native';
 import Camera from 'react-native-camera';
+
+import RecordButton from './components/RecordButton.js';
 
 export default class GoGoRecord extends Component {
     constructor(props) {
@@ -19,8 +19,8 @@ export default class GoGoRecord extends Component {
             recording: false,
         }
 
-        this.startRecording = this.startRecording.bind(this);
-        this.stopRecording = this.stopRecording.bind(this);
+        this.handleStartRecording = this.handleStartRecording.bind(this);
+        this.handleStopRecording = this.handleStopRecording.bind(this);
     }
 
     render() {
@@ -33,15 +33,17 @@ export default class GoGoRecord extends Component {
                     style={styles.preview}
                     aspect={Camera.constants.Aspect.fill}
                 >
-                    <Text style={styles.capture} onPress={this.state.recording ? this.stopRecording : this.startRecording}>
-                        {this.state.recording ? this.state.stopRecordingText : this.state.startRecordingText}
-                    </Text>
+                    <RecordButton
+                        recording={this.state.recording}
+                        onStopRecording={this.handleStopRecording}
+                        onStartRecording={this.handleStartRecording}
+                    />
                 </Camera>
             </View>
         );
     }
 
-    startRecording() {
+    handleStartRecording() {
         const options = {
             mode: Camera.constants.CaptureMode.video,
         };
@@ -57,7 +59,7 @@ export default class GoGoRecord extends Component {
         });
     }
 
-    stopRecording() {
+    handleStopRecording() {
         this.camera.stopCapture();
 
         this.setState({
@@ -76,12 +78,4 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-end',
         alignItems: 'center'
     },
-    capture: {
-        flex: 0,
-        backgroundColor: '#fff',
-        borderRadius: 5,
-        color: '#000',
-        padding: 10,
-        margin: 40
-    }
 });
