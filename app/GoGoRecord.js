@@ -7,6 +7,7 @@ import {
 import Camera from 'react-native-camera';
 
 import RecordButton from './components/RecordButton.js';
+import FlipCameraButton from './components/FlipCameraButton.js';
 
 export default class GoGoRecord extends Component {
     constructor(props) {
@@ -18,11 +19,13 @@ export default class GoGoRecord extends Component {
             recording: false,
             recordTime: 5,
             timeLeft: 5,
+            cameraType: Camera.constants.Type.back,
         }
 
         this.handleStartRecording = this.handleStartRecording.bind(this);
         this.handleStopRecording = this.handleStopRecording.bind(this);
         this.timer = this.timer.bind(this);
+        this.handleCameraFlip = this.handleCameraFlip.bind(this);
     }
 
     render() {
@@ -34,7 +37,9 @@ export default class GoGoRecord extends Component {
                     }}
                     style={styles.preview}
                     aspect={Camera.constants.Aspect.fill}
+                    type={this.state.cameraType}
                 >
+                    <FlipCameraButton onCameraFlip={this.handleCameraFlip} />
                     <RecordButton
                         recording={this.state.recording}
                         onStopRecording={this.handleStopRecording}
@@ -90,6 +95,12 @@ export default class GoGoRecord extends Component {
 
         this.setState({
             recording: false,
+        });
+    }
+
+    handleCameraFlip() {
+        this.setState((prevState) => {
+            return { cameraType: prevState.cameraType == Camera.constants.Type.front ? Camera.constants.Type.back : Camera.constants.Type.front };
         });
     }
 }
