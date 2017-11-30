@@ -39,7 +39,10 @@ export default class GoGoRecord extends Component {
                     aspect={Camera.constants.Aspect.fill}
                     type={this.state.cameraType}
                 >
-                    <FlipCameraButton onCameraFlip={this.handleCameraFlip} />
+                    <FlipCameraButton 
+                        recording={this.state.recording}
+                        onCameraFlip={this.handleCameraFlip} 
+                    />
                     <RecordButton
                         recording={this.state.recording}
                         onStopRecording={this.handleStopRecording}
@@ -91,11 +94,13 @@ export default class GoGoRecord extends Component {
     }
 
     handleStopRecording() {
-        this.camera.stopCapture();
-
-        this.setState({
-            recording: false,
-        });
+        this.camera.stopCapture()
+            .then(() => {
+                this.setState({
+                    recording: false,
+                });
+            })
+            .catch((err) => console.error(err));
     }
 
     handleCameraFlip() {

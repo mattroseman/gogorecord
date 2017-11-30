@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import {
     Text,
-    StyleSheet,
 } from 'react-native';
 
 export default class FlipCameraButton extends Component {
@@ -9,24 +8,28 @@ export default class FlipCameraButton extends Component {
         super(props);
 
         this.flipCameraText = '[FLIP]';
+        this.noFlipText = '[test]';
+
+        this.getStyle = this.getStyle.bind(this);
     }
 
     render() {
         return (
-            <Text style={styles.flipcamera} onPress={this.props.onCameraFlip}>
-                {this.flipCameraText}
+            <Text style={this.getStyle()} onPress={this.props.onCameraFlip}>
+                {this.props.recording ? this.noFlipText : this.flipCameraText}
             </Text>
         );
     }
-}
 
-const styles = StyleSheet.create({
-    flipcamera: {
-        flex: 0,
-        backgroundColor: '#fff',
-        borderRadius: 5,
-        color: '#000',
-        padding: 10,
-        margin: 40
+    getStyle() {
+        return {
+            display: this.props.recording ? 'none' : 'flex',
+            flex: 0,
+            backgroundColor: '#fff',
+            borderRadius: 5,
+            color: '#000',
+            padding: 10,
+            margin: 40
+        };
     }
-});
+}
