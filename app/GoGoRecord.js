@@ -39,16 +39,21 @@ export default class GoGoRecord extends Component {
                     aspect={Camera.constants.Aspect.fill}
                     type={this.state.cameraType}
                 >
-                    <FlipCameraButton 
-                        recording={this.state.recording}
-                        onCameraFlip={this.handleCameraFlip} 
-                    />
-                    <RecordButton
-                        recording={this.state.recording}
-                        onStopRecording={this.handleStopRecording}
-                        onStartRecording={this.handleStartRecording}
-                    />
-                    <Text>{this.state.timeLeft}</Text>
+                    <View style={styles.header}>
+                        <FlipCameraButton 
+                            recording={this.state.recording}
+                            onCameraFlip={this.handleCameraFlip} 
+                        />
+                    </View>
+                    <View style={styles.body} />
+                    <View style={styles.footer}>
+                        <RecordButton
+                            recording={this.state.recording}
+                            onStopRecording={this.handleStopRecording}
+                            onStartRecording={this.handleStartRecording}
+                        />
+                        <Text>{this.state.timeLeft}</Text>
+                    </View>
                 </Camera>
             </View>
         );
@@ -119,5 +124,19 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'flex-end',
         alignItems: 'center'
+    },
+    header: {
+        flex: 1,
+        alignSelf: 'stretch',
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+    },
+    body: {
+        flex: 2,
+    },
+    footer: {
+        flex: 1,
+        flexDirection: 'column',
+        alignItems: 'center',
     },
 });

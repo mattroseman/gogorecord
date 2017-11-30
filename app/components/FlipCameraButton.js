@@ -25,6 +25,8 @@ export default class FlipCameraButton extends Component {
         return {
             display: this.props.recording ? 'none' : 'flex',
             flex: 0,
+            maxHeight: 40,
+            maxWidth: 70,
             backgroundColor: '#fff',
             borderRadius: 5,
             color: '#000',
