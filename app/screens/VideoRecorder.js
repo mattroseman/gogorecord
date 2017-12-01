@@ -4,7 +4,11 @@ import {
     View,
     Text
 } from 'react-native';
+
 import Camera from 'react-native-camera';
+import Auth0 from 'react-native-auth0';
+
+const auth0 = new Auth0({ domain: 'gogorecord.auth0.com', clientId: 'FSNz7iVBPYSrF5dihLLwHHF26HE7az0P' });
 
 import RecordButton from '../components/RecordButton.js';
 import FlipCameraButton from '../components/FlipCameraButton.js';
@@ -27,6 +31,16 @@ export default class VideoRecorder extends Component {
         this.handleStopRecording = this.handleStopRecording.bind(this);
         this.timer = this.timer.bind(this);
         this.handleCameraFlip = this.handleCameraFlip.bind(this);
+
+        auth0
+            .webAuth
+            .authorize({scope: 'openid profile email', audience: 'https://gogorecord.auth0.com/userinfo'})
+            .then(credentials =>
+                console.log(credentials)
+                // Successfully authenticated
+                // Store the accessToken
+            )
+            .catch(error => console.log(error));
     }
 
     render() {
