@@ -19,26 +19,22 @@ export default class VideoEditor extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <View style={styles.videoContainer}>
-                    <Video
-                        source={{uri: this.props.navigation.state.params.videoFile, mainVer: 1, patchVer: 0}}
-                        rate={1.0}
-                        volume={1.0}
-                        muted={false}
-                        paused={false}
-                        resizeMode="cover"
-                        repeat={true}
-                        style={styles.backgroundVideo}
-                    />
-                </View>
-                <View style={styles.editingOptions}>
-                    <UploadVideoButton
-                        onUploadVideo={this.handleUploadVideo}
-                    />
-                    <DeleteVideoButton
-                        onDeleteVideo={this.handleDeleteVideo}
-                    />
-                </View>
+                <Video
+                    source={{uri: this.props.navigation.state.params.videoFile, mainVer: 1, patchVer: 0}}
+                    rate={1.0}
+                    volume={1.0}
+                    muted={false}
+                    paused={false}
+                    resizeMode="cover"
+                    repeat={true}
+                    style={styles.backgroundVideo}
+                />
+                <UploadVideoButton
+                    onUploadVideo={this.handleUploadVideo}
+                />
+                <DeleteVideoButton
+                    onDeleteVideo={this.handleDeleteVideo}
+                />
             </View>
         );
     }
@@ -62,14 +58,4 @@ const styles = StyleSheet.create({
         bottom: 0,
         right: 0,
     },
-    videoContainer: {
-        flex: 7,
-    },
-    editingOptions: {
-        position: 'relative',
-        flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'flex-end',
-    }
 });

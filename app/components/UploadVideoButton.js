@@ -22,7 +22,11 @@ export default class UploadVideoButton extends Component {
 
 const styles = StyleSheet.create({
     upload: {
+        position: 'absolute',
+        bottom: 0,
+        right: 0,
         height: 40,
+        width: 85,
         backgroundColor: '#fff',
         borderRadius: 5,
         color: '#000',

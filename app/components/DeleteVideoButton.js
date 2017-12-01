@@ -22,7 +22,11 @@ export default class DeleteVideoButton extends Component {
 
 const styles = StyleSheet.create({
     delete: {
+        position: 'absolute',
+        bottom: 0,
+        left: 0,
         height: 40,
+        width: 85,
         backgroundColor: '#fff',
         borderRadius: 5,
         color: '#000',
