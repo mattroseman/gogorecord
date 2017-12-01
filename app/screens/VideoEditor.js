@@ -5,6 +5,8 @@ import {
 } from 'react-native';
 
 import Video from 'react-native-video';
+import RNFS from 'react-native-fs';
+
 import UploadVideoButton from '../components/UploadVideoButton.js';
 import DeleteVideoButton from '../components/DeleteVideoButton.js';
 
@@ -43,6 +45,26 @@ export default class VideoEditor extends Component {
     }
 
     handleDeleteVideo() {
+        filepath = this.props.navigation.state.params.videoFile;
+        console.log(filepath);
+        RNFS.exists(filepath)
+            .then((result) => {
+                console.log('file exists: ', result);
+
+                if (result) {
+                    return RNFS.unlink(filepath)
+                        .then(() => {
+                            console.log('FILE DELETED');
+                        })
+                        .catch((err) => {
+                            console.error(err);
+                        });
+                }
+            })
+            .catch((err) => {
+                console.error(err);
+            });
+        this.props.navigation.goBack();
     }
 }
 
