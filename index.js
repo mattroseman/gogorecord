@@ -1,4 +1,4 @@
 import { AppRegistry } from 'react-native';
-import GoGoRecord from './app/GoGoRecord.js';
+import GoGoRecordNavigator from './app/GoGoRecord.js';
 
-AppRegistry.registerComponent('gogorecord', () => GoGoRecord);
+AppRegistry.registerComponent('gogorecord', () => GoGoRecordNavigator);
