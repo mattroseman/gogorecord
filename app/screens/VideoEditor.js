@@ -1,39 +1,75 @@
 import React, { Component } from 'react';
 import {
     StyleSheet,
+    View,
 } from 'react-native';
 
 import Video from 'react-native-video';
+import UploadVideoButton from '../components/UploadVideoButton.js';
+import DeleteVideoButton from '../components/DeleteVideoButton.js';
 
 export default class VideoEditor extends Component {
     constructor(props) {
         super(props);
 
-        console.log(props.videoFile);
+        this.handleUploadVideo = this.handleUploadVideo.bind(this);
+        this.handleDeleteVideo = this.handleDeleteVideo.bind(this);
     }
 
     render() {
         return (
-            <Video
-                source={{uri: this.props.navigation.state.params.videoFile, mainVer: 1, patchVer: 0}}
-                rate={1.0}
-                volume={1.0}
-                muted={false}
-                paused={false}
-                resizeMode="cover"
-                repeat={true}
-                style={styles.backgroundVideo}
-            />
+            <View style={styles.container}>
+                <View style={styles.videoContainer}>
+                    <Video
+                        source={{uri: this.props.navigation.state.params.videoFile, mainVer: 1, patchVer: 0}}
+                        rate={1.0}
+                        volume={1.0}
+                        muted={false}
+                        paused={false}
+                        resizeMode="cover"
+                        repeat={true}
+                        style={styles.backgroundVideo}
+                    />
+                </View>
+                <View style={styles.editingOptions}>
+                    <UploadVideoButton
+                        onUploadVideo={this.handleUploadVideo}
+                    />
+                    <DeleteVideoButton
+                        onDeleteVideo={this.handleDeleteVideo}
+                    />
+                </View>
+            </View>
         );
+    }
+
+    handleUploadVideo() {
+    }
+
+    handleDeleteVideo() {
     }
 }
 
 const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        flexDirection: 'column',
+    },
     backgroundVideo: {
         position: 'absolute',
         top: 0,
         left: 0,
         bottom: 0,
         right: 0,
+    },
+    videoContainer: {
+        flex: 7,
+    },
+    editingOptions: {
+        position: 'relative',
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'flex-end',
     }
 });

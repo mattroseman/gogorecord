@@ -12,4 +12,6 @@ export default GoGoRecordNavigator = StackNavigator({
             headerTitle: 'Edit Vlog',
         },
     },
+}, {
+    headerMode: 'none',
 });
