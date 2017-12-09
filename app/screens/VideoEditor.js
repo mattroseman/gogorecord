@@ -8,7 +8,8 @@ import Video from 'react-native-video';
 import RNFS from 'react-native-fs';
 import Auth0 from 'react-native-auth0';
 
-const auth0 = new Auth0({ domain: 'gogorecord.auth0.com', clientId: 'FSNz7iVBPYSrF5dihLLwHHF26HE7az0P' });
+var credentials = require('../config/auth0-credentials');
+const auth0 = new Auth0(credentials);
 
 import UploadVideoButton from '../components/UploadVideoButton.js';
 import DeleteVideoButton from '../components/DeleteVideoButton.js';
@@ -16,6 +17,8 @@ import DeleteVideoButton from '../components/DeleteVideoButton.js';
 export default class VideoEditor extends Component {
     constructor(props) {
         super(props);
+
+        this.state = { accessToken: null };
 
         this.handleUploadVideo = this.handleUploadVideo.bind(this);
         this.handleDeleteVideo = this.handleDeleteVideo.bind(this);
@@ -45,15 +48,21 @@ export default class VideoEditor extends Component {
     }
 
     handleUploadVideo() {
-        auth0
-            .webAuth
-            .authorize({scope: 'openid profile email', audience: 'https://gogorecord.auth0.com/userinfo'})
-            .then(credentials =>
-                console.log(credentials)
-                // Successfully authenticated
-                // Store the accessToken
-            )
-            .catch(error => console.log(error));
+        if (this.state.accessToken === null) {
+            // Have user log in
+            auth0.webAuth
+                .authorize({
+                    scope: 'openid profile',
+                    audience: 'https://' + credentials.domain + '/userinfo'
+                })
+                .then(credentials => {
+                    console.log(credentials.accessToken)
+                    this.setState({ accessToken: credentials.accessToekn });
+                })
+                .catch(error => console.log(error));
+        } else {
+            // upload video to youtube
+        }
     }
 
     handleDeleteVideo() {
