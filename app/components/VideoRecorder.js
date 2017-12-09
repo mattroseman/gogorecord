@@ -7,8 +7,8 @@ import {
 
 import Camera from 'react-native-camera';
 
-import RecordButton from '../components/RecordButton.js';
-import FlipCameraButton from '../components/FlipCameraButton.js';
+import RecordButton from './RecordButton';
+import FlipCameraButton from './FlipCameraButton';
 
 export default class VideoRecorder extends Component {
     constructor(props) {
@@ -112,7 +112,7 @@ export default class VideoRecorder extends Component {
                 this.setState({
                     recording: false,
                 });
-                this.props.navigation.navigate('VideoEditor', {'videoFile': this.state.videoFile});
+                this.props.onDoneRecording(this.state.videoFile);
             })
             .catch((err) => console.error(err));
     }

@@ -11,8 +11,8 @@ import Auth0 from 'react-native-auth0';
 var credentials = require('../config/auth0-credentials');
 const auth0 = new Auth0(credentials);
 
-import UploadVideoButton from '../components/UploadVideoButton.js';
-import DeleteVideoButton from '../components/DeleteVideoButton.js';
+import UploadVideoButton from './UploadVideoButton';
+import DeleteVideoButton from './DeleteVideoButton';
 
 export default class VideoEditor extends Component {
     constructor(props) {
@@ -28,7 +28,7 @@ export default class VideoEditor extends Component {
         return (
             <View style={styles.container}>
                 <Video
-                    source={{uri: this.props.navigation.state.params.videoFile, mainVer: 1, patchVer: 0}}
+                    source={{uri: this.props.videoFile, mainVer: 1, patchVer: 0}}
                     rate={1.0}
                     volume={1.0}
                     muted={false}
@@ -66,7 +66,7 @@ export default class VideoEditor extends Component {
     }
 
     handleDeleteVideo() {
-        filepath = this.props.navigation.state.params.videoFile;
+        filepath = this.props.videoFile;
         console.log(filepath);
         RNFS.exists(filepath)
             .then((result) => {
@@ -85,7 +85,7 @@ export default class VideoEditor extends Component {
             .catch((err) => {
                 console.error(err);
             });
-        this.props.navigation.goBack();
+        this.props.onDoneEditing();
     }
 }
 
