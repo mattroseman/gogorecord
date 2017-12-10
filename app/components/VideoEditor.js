@@ -48,21 +48,8 @@ export default class VideoEditor extends Component {
     }
 
     handleUploadVideo() {
-        if (this.state.accessToken === null) {
-            // Have user log in
-            auth0.webAuth
-                .authorize({
-                    scope: 'openid profile',
-                    audience: 'https://' + credentials.domain + '/userinfo'
-                })
-                .then(credentials => {
-                    console.log(credentials.accessToken)
-                    this.setState({ accessToken: credentials.accessToekn });
-                })
-                .catch(error => console.log(error));
-        } else {
-            // upload video to youtube
-        }
+        // TODO upload video to youtube
+        this.props.onDoneEditing();
     }
 
     handleDeleteVideo() {
